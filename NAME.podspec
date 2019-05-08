@@ -17,8 +17,6 @@ TODO: Add long description of the pod here.
   # s.resource_bundles = {
   #   '${POD_NAME}' => ['${POD_NAME}/Assets/*.png']
   # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'PCNetworking', '~> 1.0'
 end
