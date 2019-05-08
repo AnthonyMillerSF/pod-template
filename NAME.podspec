@@ -1,12 +1,12 @@
 Pod::Spec.new do |s|
   s.name             = '${POD_NAME}'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of ${POD_NAME}.
+  s.summary          = 'A short description of ${POD_NAME}.'
   s.description      = <<-DESC
 TODO: Add long description of the pod here.
                        DESC
 
-  s.license          = { :type => "All rights reserved.", :file => 'LICENSE' }
+  s.license          = { :type => 'All rights reserved.', :file => 'LICENSE' }
   s.author           = { '${USER_NAME}' => '${USER_EMAIL}' }
   s.source           = { :git => 'https://github.com/SalesforceFoundation/${POD_NAME}.git', :tag => s.version.to_s }
 
