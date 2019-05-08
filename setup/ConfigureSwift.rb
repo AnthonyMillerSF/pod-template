@@ -18,12 +18,13 @@ module Pod
       case framework
         when :quick
           configurator.add_pod_to_podfile "Quick', '~> 1.2.0"
-          configurator.add_pod_to_podfile "Nimble', '~> 7.0.2"
           configurator.set_test_framework "quick", "swift", "swift"
 
         when :none
           configurator.set_test_framework "xctest", "swift", "swift"
       end
+
+      configurator.add_pod_to_podfile "Nimble', '~> 7.0.2"
 
       snapshots = configurator.ask_with_answers("Would you like to do view based testing", ["Yes", "No"]).to_sym
       case snapshots

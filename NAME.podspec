@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.license          = { :type => 'All rights reserved.', :file => 'LICENSE' }
+  s.license          = { :type => "All rights reserved.", :file => 'LICENSE' }
   s.author           = { '${USER_NAME}' => '${USER_EMAIL}' }
   s.source           = { :git => 'https://github.com/SalesforceFoundation/${POD_NAME}.git', :tag => s.version.to_s }
 
@@ -18,5 +18,5 @@ TODO: Add long description of the pod here.
   #   '${POD_NAME}' => ['${POD_NAME}/Assets/*.png']
   # }
   # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'PCNetworking', '~> 1.0'
+  # s.dependency 'PCAPI', '~> 1.0'
 end
