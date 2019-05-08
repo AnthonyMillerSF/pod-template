@@ -78,7 +78,6 @@ module Pod
       add_pods_to_podfile
       customise_prefix
       rename_classes_folder
-      ensure_carthage_compatibility
       reinitialize_git_repo
       run_pod_install
 
@@ -86,10 +85,6 @@ module Pod
     end
 
     #----------------------------------------#
-
-    def ensure_carthage_compatibility
-      FileUtils.ln_s('Example/Pods/Pods.xcodeproj', '_Pods.xcodeproj')
-    end
 
     def run_pod_install
       puts "\nRunning " + "pod install".magenta + " on your new library."
