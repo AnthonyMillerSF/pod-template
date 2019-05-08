@@ -8,7 +8,8 @@ TODO: Add long description of the pod here.
 
   s.license          = { :type => 'All rights reserved.', :file => 'LICENSE' }
   s.author           = { '${USER_NAME}' => '${USER_EMAIL}' }
-  s.source           = { :git => 'https://github.com/SalesforceFoundation/${POD_NAME}.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/SalesforceFoundation/makana-repo.git', :tag => s.name.to_s + "-" + s.version.to_s }
+  s.homepage = 'https://github.com/SalesforceFoundation/makana-repo/kalani/PrivatePods/${POD_NAME}'
 
   s.ios.deployment_target = '11.4'
 
