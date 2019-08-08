@@ -7,9 +7,10 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.license          = { :type => 'All rights reserved.', :file => 'LICENSE' }
-  s.author           = { '${USER_NAME}' => '${USER_EMAIL}' }
-  s.source           = { :git => 'https://github.com/SalesforceFoundation/makana-repo.git', :tag => s.name.to_s + "-" + s.version.to_s }
+  s.license  = { :type => 'All rights reserved.', :file => 'LICENSE' }
+  s.author   = { '${USER_NAME}' => '${USER_EMAIL}' }
+  s.source   = { :git => 'https://github.com/SalesforceFoundation/makana-repo.git',
+                 :tag => s.name.to_s + "-" + s.version.to_s }
   s.homepage = 'https://github.com/SalesforceFoundation/makana-repo/kalani/PrivatePods/${POD_NAME}'
 
   s.source_files = '${POD_NAME}/Sources/**/*'
