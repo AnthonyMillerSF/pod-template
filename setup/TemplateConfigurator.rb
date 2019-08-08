@@ -184,7 +184,7 @@ module Pod
     end
 
     def podspec_path
-        "#{pod_name}.podspec'
+        "#{pod_name}.podspec"
     end
 
     #----------------------------------------#
