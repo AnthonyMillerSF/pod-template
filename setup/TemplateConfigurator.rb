@@ -99,7 +99,7 @@ module Pod
         FileUtils.mv "POD_README.md", "README.md"
         FileUtils.mv "POD_LICENSE", "LICENSE"
         FileUtils.mv "NAME.podspec", "#{pod_name}.podspec"
-        FileUtils.mv "/POD_Tests/POD_Tests.swift", "/#{pod_name}Tests/#{pod_name}Tests.swift"
+        FileUtils.mv "Tests/POD_Tests.swift", "Tests/#{pod_name}Tests.swift"
     end
 
     def replace_variables_in_files
