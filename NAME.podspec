@@ -19,4 +19,10 @@ TODO: Add long description of the pod here.
   # }
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'PCAPI', '~> 1.0'
+
+  s.test_spec do |ts|
+    ts.source_files = 'Tests/**/*.swift'
+    ts.dependency 'Nimble'
+  end
+
 end
