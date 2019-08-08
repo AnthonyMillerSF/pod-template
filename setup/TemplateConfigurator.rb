@@ -118,7 +118,7 @@ module Pod
 
     def replace_test_file_with_template
         content_path = "setup/test_examples/" + @test_framework + ".swift"
-        tests_path = "templates/#{pod_name}Tests/#{pod_name}Tests.swift"
+        tests_path = "Tests/#{pod_name}Tests.swift"
         tests = File.read tests_path
         tests.gsub!("${TEST_EXAMPLE}", File.read(content_path) )
         File.open(tests_path, "w") { |file| file.puts tests }
