@@ -77,11 +77,11 @@ module Pod
 
       ConfigureSwift.perform(configurator: self)
 
-      delete_configuration_files
       rename_template_files
       replace_variables_in_files
       replace_test_file_with_template
       rename_pod_sources_folder
+      delete_configuration_files
       reinitialize_git_repo
 
       @message_bank.farewell_message
@@ -89,13 +89,8 @@ module Pod
 
     #----------------------------------------#
 
-    def delete_configuration_files
-        ["./**/.gitkeep", "configure", "_CONFIGURE.rb", "LICENSE", "setup"].each do |asset|
-            `rm -rf #{asset}`
-        end
-    end
-
     def rename_template_files
+        `rm -rf LICENSE`
         FileUtils.mv "POD_README.md", "README.md"
         FileUtils.mv "POD_LICENSE", "LICENSE"
         FileUtils.mv "NAME.podspec", "#{pod_name}.podspec"
@@ -147,6 +142,12 @@ module Pod
 
     def set_test_framework(test_type)
         @test_framework == test_type
+    end
+
+    def delete_configuration_files
+        ["./**/.gitkeep", "configure", "_CONFIGURE.rb", "setup"].each do |asset|
+            `rm -rf #{asset}`
+        end
     end
 
     def reinitialize_git_repo
