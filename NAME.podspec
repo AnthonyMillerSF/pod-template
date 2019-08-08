@@ -23,7 +23,8 @@ TODO: Add long description of the pod here.
 
   s.test_spec do |ts|
     ts.source_files = 'Tests/**/*.swift'
-    ts.dependency 'Nimble'
+
+    ${INCLUDED_TEST_DEPS}
   end
 
 end

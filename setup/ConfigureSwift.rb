@@ -12,39 +12,31 @@ module Pod
     end
 
     def perform
-      keep_demo = configurator.ask_with_answers("Would you like to include a demo application with your library", ["Yes", "No"]).to_sym
+      keep_demo = configurator.ask_with_answers("Would you like to include an example application with your library", ["Yes", "No"]).to_sym
 
-      framework = configurator.ask_with_answers("Which testing frameworks will you use", ["Quick", "None"]).to_sym
-      case framework
-        when :quick
-          configurator.add_pod_to_podfile "Quick', '~> 1.2.0"
-          configurator.set_test_framework "quick", "swift", "swift"
-
-        when :none
-          configurator.set_test_framework "xctest", "swift", "swift"
+      use_quick = configurator.ask_with_answers("Will you use Quick for testing?", ["Yes", "No"]).to_sym
+      if use_quick == :yes
+          configurator.add_test_spec_dependency "Quick"
+          configurator.set_test_framework "quick"
+      else
+          configurator.set_test_framework "xctest"
       end
 
-      configurator.add_pod_to_podfile "Nimble', '~> 7.0.2"
-
-      snapshots = configurator.ask_with_answers("Would you like to do view based testing", ["Yes", "No"]).to_sym
+      snapshots = configurator.ask_with_answers("Would you like to include snapshot tests", ["Yes", "No"]).to_sym
       case snapshots
         when :yes
-          configurator.add_pod_to_podfile "FBSnapshotTestCase' , '~> 2.1.4"
+          configurator.add_test_spec_dependency "FBSnapshotTestCase"
+          configurator.add_test_spec_dependency "Nimble-Snapshots"
 
           if keep_demo == :no
-              puts " Putting demo application back in, you cannot do view tests without a host application."
+              puts " Putting demo application back in, you cannot include snapshot tests without a host application."
               keep_demo = :yes
-          end
-
-          if framework == :quick
-              configurator.add_pod_to_podfile "Nimble-Snapshots' , '~> 6.3.0"
           end
       end
 
       Pod::ProjectManipulator.new({
         :configurator => @configurator,
-        :xcodeproj_path => "templates/swift/Example/PROJECT.xcodeproj",
-        :platform => :ios,
+        :example_source_path => "Example/",
         :remove_demo_project => (keep_demo == :no),
         :prefix => ""
       }).run
