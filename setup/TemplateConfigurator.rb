@@ -83,6 +83,7 @@ module Pod
       replace_variables_in_files
       rename_pod_sources_folder
       add_dependencies_to_podspec_test_spec
+      configure_example_app
       delete_configuration_files
       reinitialize_git_repo
 
@@ -124,10 +125,6 @@ module Pod
         FileUtils.mv "Pod", @pod_name
     end
 
-    def add_test_spec_dependency dep
-        @pods_for_podspec_test_spec << dep
-    end
-
     def add_dependencies_to_podspec_test_spec
         podspec_file = File.read podspec_path
         podspec_file_content = @pods_for_podspec_test_spec.map do |pod|
@@ -137,16 +134,15 @@ module Pod
         File.open(podspec_path, "w") { |file| file.puts podspec_file }
     end
 
-    def add_line_to_pch line
-      @prefixes << line
-    end
-
-    def set_test_framework(test_type)
-        @test_framework == test_type
-    end
-
-    def set_keep_example(keep_example)
-        @keep_example = keep_example
+    def configure_example_app
+        podspec_file = File.read podspec_path
+        podspec_file_content = (@keep_example ? example_app_spec_contents : "")
+        podspec_file.gsub!("${EXAMPLE_APP_SPEC}", podspec_file_content)
+        File.open(podspec_path, "w") { |file| file.puts podspec_file }
+        if !@keep_example
+            # Remove the actual folder + files for both projects
+            `rm -rf Example`
+        end
     end
 
     def delete_configuration_files
@@ -161,19 +157,22 @@ module Pod
       `git add -A`
     end
 
-    def validate_user_details
-        return (user_email.length > 0) && (user_name.length > 0)
+    #----------------------------------------#
+
+    def add_test_spec_dependency dep
+        @pods_for_podspec_test_spec << dep
     end
 
-    def configure_example_app
-        podspec_file = File.read podspec_path
-        podspec_file_content = (@keep_example ? example_app_spec_contents : "")
-        podspec_file.gsub!("${EXAMPLE_APP_SPEC}", podspec_file_content)
-        File.open(podspec_path, "w") { |file| file.puts podspec_file }
-        if !@keep_example
-            # Remove the actual folder + files for both projects
-            `rm -rf Example`
-        end
+    def set_test_framework(test_type)
+        @test_framework == test_type
+    end
+
+    def set_keep_example(keep_example)
+        @keep_example = keep_example
+    end
+
+    def validate_user_details
+        return (user_email.length > 0) && (user_name.length > 0)
     end
 
     #----------------------------------------#
