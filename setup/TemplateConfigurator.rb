@@ -146,7 +146,7 @@ module Pod
     end
 
     def delete_configuration_files
-        ["./**/.gitkeep", "configure", "_CONFIGURE.rb", "setup"].each do |asset|
+        [".gitignore", ".git", "./**/.gitkeep", "configure", "_CONFIGURE.rb", "setup"].each do |asset|
             `rm -rf #{asset}`
         end
     end
