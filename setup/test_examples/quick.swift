@@ -1,8 +1,8 @@
 import Quick
 import Nimble
-import PROJECT
+@testable import ${POD_NAME}
 
-class PROJECTSpec: QuickSpec {
+class ${POD_NAME}Spec: QuickSpec {
     override func spec() {
 
     }

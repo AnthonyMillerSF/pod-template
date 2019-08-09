@@ -36,6 +36,7 @@ module Pod
 
       puts "\n------------------------------"
       puts ""
+      puts "Sahhhhh Duuuuh"
       puts "To get you started we need to ask a few questions, this should only take a minute."
       puts ""
 
@@ -52,10 +53,8 @@ module Pod
     def farewell_message
       puts ""
 
-      puts " Ace! you're ready to go!"
-      puts " We will start you off by opening your project in Xcode"
-      pod_name = @configurator.pod_name
-      run_command "open 'Example/#{pod_name}.xcworkspace'", "open '#{pod_name}/Example/#{pod_name}.xcworkspace'"
+      puts " Boom! you're ready to go!"
+      puts " Next, add your new Pod to kalani using the 'PCPod' command and pod install."      
     end
 
 

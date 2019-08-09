@@ -1,8 +1,8 @@
 import XCTest
 import Nimble
-@testable import PROJECT
+@testable import ${POD_NAME}
 
-class PROJECTTests: XCTestCase {
+class ${POD_NAME}Tests: XCTestCase {
     
     override func setUp() {
         super.setUp()
