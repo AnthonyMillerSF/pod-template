@@ -212,7 +212,6 @@ module Pod
   s.app_spec 'ExampleApp' do |ts|
     ts.source_files = 'Example/**/*.swift'
   end
-
 )
     end
 
