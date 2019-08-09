@@ -34,7 +34,7 @@ module Pod
           end
       end
 
-      configurator.set_keep_example(keep_example == :no)
+      configurator.set_keep_example(keep_example == :yes)
 
       Pod::ProjectManipulator.new({
         :configurator => @configurator,
