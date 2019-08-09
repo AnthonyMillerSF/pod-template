@@ -78,9 +78,10 @@ module Pod
       ConfigureSwift.perform(configurator: self)
 
       rename_template_files
-      replace_variables_in_files
       replace_test_file_with_template
+      replace_variables_in_files
       rename_pod_sources_folder
+      add_dependencies_to_podspec_test_spec
       delete_configuration_files
       reinitialize_git_repo
 
@@ -93,12 +94,19 @@ module Pod
         `rm -rf LICENSE`
         FileUtils.mv "POD_README.md", "README.md"
         FileUtils.mv "POD_LICENSE", "LICENSE"
-        FileUtils.mv "NAME.podspec", "#{pod_name}.podspec"
-        FileUtils.mv "Tests/POD_Tests.swift", "Tests/#{pod_name}Tests.swift"
+        FileUtils.mv "NAME.podspec", podspec_path
+        FileUtils.mv "Tests/POD_Tests.swift", test_file_path
+    end
+
+    def replace_test_file_with_template
+        content_path = "setup/test_examples/" + @test_framework + ".swift"
+        tests = File.read test_file_path
+        tests.gsub!("${TEST_EXAMPLE}", File.read(content_path) )
+        File.open(test_file_path, "w") { |file| file.puts tests }
     end
 
     def replace_variables_in_files
-        file_names = ['LICENSE', 'README.md', podspec_path]
+        file_names = ['LICENSE', 'README.md', podspec_path, test_file_path]
         file_names.each do |file_name|
             text = File.read(file_name)
             text.gsub!("${POD_NAME}", @pod_name)
@@ -109,14 +117,6 @@ module Pod
             text.gsub!("${DATE}", date)
             File.open(file_name, "w") { |file| file.puts text }
         end
-    end
-
-    def replace_test_file_with_template
-        content_path = "setup/test_examples/" + @test_framework + ".swift"
-        tests_path = "Tests/#{pod_name}Tests.swift"
-        tests = File.read tests_path
-        tests.gsub!("${TEST_EXAMPLE}", File.read(content_path) )
-        File.open(tests_path, "w") { |file| file.puts tests }
     end
 
     def rename_pod_sources_folder
@@ -186,6 +186,10 @@ module Pod
 
     def podspec_path
         "#{pod_name}.podspec"
+    end
+
+    def test_file_path
+        "Tests/#{pod_name}Tests.swift"
     end
 
     #----------------------------------------#
