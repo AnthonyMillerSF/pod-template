@@ -167,10 +167,10 @@ module Pod
 
     def configure_example_app
         podspec_file = File.read podspec_path
-        podspec_file_content = (:keep_example ? example_app_spec_contents : "")
+        podspec_file_content = (@keep_example ? example_app_spec_contents : "")
         podspec_file.gsub!("${EXAMPLE_APP_SPEC}", podspec_file_content)
         File.open(podspec_path, "w") { |file| file.puts podspec_file }
-        if !:keep_example
+        if !@keep_example
             # Remove the actual folder + files for both projects
             `rm -rf Example`
         end
