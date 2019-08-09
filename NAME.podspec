@@ -21,10 +21,11 @@ TODO: Add long description of the pod here.
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'PCAPI', '~> 1.0'
 
-  s.test_spec do |ts|
+  s.test_spec 'Tests' do |ts|
     ts.source_files = 'Tests/**/*.swift'
 
     ${INCLUDED_TEST_DEPS}
   end
 
+  ${EXAMPLE_APP_SPEC}
 end

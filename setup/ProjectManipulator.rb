@@ -3,7 +3,7 @@ require 'xcodeproj'
 module Pod
 
   class ProjectManipulator
-    attr_reader :configurator, :example_source_path, :platform, :remove_demo_target, :string_replacements, :prefix
+    attr_reader :configurator, :example_source_path, :string_replacements, :prefix
 
     def self.perform(options)
       new(options).perform
@@ -11,8 +11,7 @@ module Pod
 
     def initialize(options)
       @example_source_path = options.fetch(:example_source_path)
-      @configurator = options.fetch(:configurator)      
-      @remove_demo_target = options.fetch(:remove_demo_project)
+      @configurator = options.fetch(:configurator)            
       @prefix = options.fetch(:prefix)
     end
 
@@ -25,8 +24,6 @@ module Pod
         "PREFIX" => @prefix
       }
       replace_internal_project_settings
-
-      remove_demo_project if @remove_demo_target
     end
 
     def replace_internal_project_settings
@@ -40,11 +37,6 @@ module Pod
 
             File.open(name, "w") { |file| file.puts text }
         end
-    end
-
-    def remove_demo_project
-      # Remove the actual folder + files for both projects
-      `rm -rf Example`
     end
 
   end

@@ -12,6 +12,7 @@ module Pod
       @test_framework = "xctest"
       @prefixes = []
       @message_bank = MessageBank.new(self)
+      @keep_example = true
     end
 
     #----------------------------------------#
@@ -144,6 +145,10 @@ module Pod
         @test_framework == test_type
     end
 
+    def set_keep_example(keep_example)
+        @keep_example = keep_example
+    end
+
     def delete_configuration_files
         ["./**/.gitkeep", "configure", "_CONFIGURE.rb", "setup"].each do |asset|
             `rm -rf #{asset}`
@@ -158,6 +163,17 @@ module Pod
 
     def validate_user_details
         return (user_email.length > 0) && (user_name.length > 0)
+    end
+
+    def configure_example_app
+        podspec_file = File.read podspec_path
+        podspec_file_content = (:keep_example ? example_app_spec_contents : "")
+        podspec_file.gsub!("${EXAMPLE_APP_SPEC}", podspec_file_content)
+        File.open(podspec_path, "w") { |file| file.puts podspec_file }
+        if !:keep_example
+            # Remove the actual folder + files for both projects
+            `rm -rf Example`
+        end
     end
 
     #----------------------------------------#
@@ -190,6 +206,15 @@ module Pod
 
     def test_file_path
         "Tests/#{pod_name}Tests.swift"
+    end
+
+    def example_app_spec_contents
+%q(
+  s.app_spec 'ExampleApp' do |ts|
+    ts.source_files = 'Example/**/*.swift'
+  end
+
+)
     end
 
     #----------------------------------------#
