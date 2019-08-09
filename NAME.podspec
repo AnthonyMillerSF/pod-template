@@ -13,6 +13,8 @@ TODO: Add long description of the pod here.
                  :tag => s.name.to_s + "-" + s.version.to_s }
   s.homepage = 'https://github.com/SalesforceFoundation/kalani/PrivatePods/${POD_NAME}'
 
+  s.static_framework = true
+
   s.source_files = '${POD_NAME}/Sources/**/*'
   
   # s.resource_bundles = {
