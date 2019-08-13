@@ -54,7 +54,7 @@ module Pod
       puts ""
 
       puts " Boom! you're ready to go!"
-      puts " Next, add your new Pod to kalani using the 'PCPod' command and pod install."      
+      puts " Next, add your new Pod to the kalani 'Podfile' and pod install."      
     end
 
 
