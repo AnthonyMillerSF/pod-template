@@ -97,6 +97,7 @@ module Pod
         FileUtils.mv "POD_README.md", "README.md"
         FileUtils.mv "POD_LICENSE", "LICENSE"
         FileUtils.mv "NAME.podspec", podspec_path
+        FileUtils.mv "NAME_Mocks.podspec", test_mocks_podspec_path
         FileUtils.mv "Tests/POD_Tests.swift", test_file_path
     end
 
@@ -108,7 +109,7 @@ module Pod
     end
 
     def replace_variables_in_files
-        file_names = ['LICENSE', 'README.md', podspec_path, test_file_path]
+        file_names = ['LICENSE', 'README.md', podspec_path, test_mocks_podspec_path, test_file_path]
         file_names.each do |file_name|
             text = File.read(file_name)
             text.gsub!("${POD_NAME}", @pod_name)
@@ -201,6 +202,10 @@ module Pod
 
     def podspec_path
         "#{pod_name}.podspec"
+    end
+
+    def test_mocks_podspec_path
+        "#{pod_name}_Mocks.podspec"
     end
 
     def test_file_path

@@ -2,9 +2,9 @@ Pod::Spec.new do |s|
   s.name             = '${POD_NAME}'
   s.version          = '0.1.0'
   s.ios.deployment_target = '11.4'
-  s.summary          = 'A short description of ${POD_NAME}.'
+  s.summary          = 'A collection of mock objects for unit testing with ${POD_NAME}.'
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
+A collection of mock objects for unit testing with ${POD_NAME}.
                        DESC
 
   s.license  = { :type => 'All rights reserved.', :file => 'LICENSE' }
@@ -15,20 +15,10 @@ TODO: Add long description of the pod here.
 
   s.static_framework = true
 
-  s.source_files = '${POD_NAME}/Sources/**/*'
+  s.source_files = 'TestMocks/**/*.swift'
+
+  s.dependency '${POD_NAME}'
+
+  # s.dependency 'Swinject'
   
-  # s.resource_bundles = {
-  #   '${POD_NAME}' => ['${POD_NAME}/Assets/*.*']
-  # }
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'PCAPI', '~> 1.0'
-
-  s.test_spec 'Tests' do |ts|
-    ts.source_files = 'Tests/**/*.swift'
-
-    ts.dependency '${POD_NAME}_Mocks'
-    ${INCLUDED_TEST_DEPS}
-  end
-
-  ${EXAMPLE_APP_SPEC}
 end
