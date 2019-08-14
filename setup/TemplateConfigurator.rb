@@ -84,8 +84,7 @@ module Pod
       rename_pod_sources_folder
       add_dependencies_to_podspec_test_spec
       configure_example_app
-      delete_configuration_files
-      reinitialize_git_repo
+      delete_configuration_files      
 
       @message_bank.farewell_message
     end
@@ -150,12 +149,6 @@ module Pod
         [".gitignore", ".git", "./**/.gitkeep", "configure", "_CONFIGURE.rb", "setup"].each do |asset|
             `rm -rf #{asset}`
         end
-    end
-
-    def reinitialize_git_repo
-      `rm -rf .git`
-      `git init`
-      `git add -A`
     end
 
     #----------------------------------------#
