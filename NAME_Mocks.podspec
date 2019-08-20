@@ -18,6 +18,7 @@ A collection of mock objects for unit testing with ${POD_NAME}.
   s.source_files = 'TestMocks/**/*.swift'
 
   s.dependency '${POD_NAME}'
+  s.dependency 'PCCore_Mocks'
 
   # s.dependency 'Swinject'
   
