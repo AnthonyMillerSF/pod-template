@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name             = '${POD_NAME}'
+  s.name             = '${POD_NAME}_Mocks'
   s.version          = '0.1.0'
   s.ios.deployment_target = '11.4'
   s.summary          = 'A collection of mock objects for unit testing with ${POD_NAME}.'

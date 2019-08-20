@@ -17,11 +17,12 @@ TODO: Add long description of the pod here.
 
   s.source_files = '${POD_NAME}/Sources/**/*'
   
+  s.dependency 'PCCore', '~> 1.0'
+
   # s.resource_bundles = {
   #   '${POD_NAME}' => ['${POD_NAME}/Assets/*.*']
   # }
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'PCAPI', '~> 1.0'
+  # s.frameworks = 'UIKit', 'MapKit'  
 
   s.test_spec 'Tests' do |ts|
     ts.source_files = 'Tests/**/*.swift'
