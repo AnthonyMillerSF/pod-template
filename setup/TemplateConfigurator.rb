@@ -83,6 +83,7 @@ module Pod
       replace_variables_in_files
       rename_pod_sources_folder
       add_dependencies_to_podspec_test_spec
+      create_test_linter_symlink
       configure_example_app
       delete_configuration_files      
 
@@ -132,6 +133,10 @@ module Pod
         end.join("\n    ")
         podspec_file.gsub!("${INCLUDED_TEST_DEPS}", podspec_file_content)
         File.open(podspec_path, "w") { |file| file.puts podspec_file }
+    end
+
+    def create_test_linter_symlink
+        `cd Tests && ln -s ../../../kalaniTests/.swiftlint.yml .swiftlint.yml && cd ..`
     end
 
     def configure_example_app
