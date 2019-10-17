@@ -85,6 +85,7 @@ module Pod
       add_dependencies_to_podspec_test_spec
       create_test_linter_symlink
       configure_example_app
+      add_lib_to_test_mocks
       delete_configuration_files      
 
       @message_bank.farewell_message
@@ -147,6 +148,17 @@ module Pod
             # Remove the actual folder + files for both projects
             `rm -rf Example`
         end
+    end
+
+    def add_lib_to_test_mocks
+        test_mocks_podspec_path = "../PCTestMocks/PCTestMocks.podspec"
+        test_mocks_podspec_file = File.readlines test_mocks_podspec_path
+
+        new_line_index = -1
+        test_mocks_podspec_file.each_with_index { |line, index| new_line_index = index + 1 if line.include? "s.dependency 'PC" }
+        
+        test_mocks_podspec_file.insert(new_line_index, "s.dependency '" + @pod_name + "'" if new_line_index != -1                
+        File.write(test_mocks_podspec_path, test_mocks_podspec_file)
     end
 
     def delete_configuration_files
