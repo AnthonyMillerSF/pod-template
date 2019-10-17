@@ -162,10 +162,14 @@ module Pod
         end
         
         if new_line_index != -1
-          test_mocks_podspec_file.insert(new_line_index, "s.dependency '" + @pod_name + "'")
+          test_mocks_podspec_file.insert(new_line_index, "  s.dependency '" + @pod_name + "'\n")
         end
 
-        File.write(test_mocks_podspec_path, test_mocks_podspec_file)
+        File.open(test_mocks_podspec_path, "w") do |file| 
+          test_mocks_podspec_file.each do |line| 
+            file.write(line) 
+          end 
+        end
     end
 
     def delete_configuration_files

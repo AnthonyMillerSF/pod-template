@@ -27,7 +27,7 @@ TODO: Add long description of the pod here.
   s.test_spec 'Tests' do |ts|
     ts.source_files = 'Tests/**/*.swift'
 
-    ts.dependency '$PCTestMocks'
+    ts.dependency 'PCTestMocks'
     ${INCLUDED_TEST_DEPS}
   end
 
