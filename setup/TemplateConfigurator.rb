@@ -157,7 +157,10 @@ module Pod
         new_line_index = -1
         test_mocks_podspec_file.each_with_index { |line, index| new_line_index = index + 1 if line.include? "s.dependency 'PC" }
         
-        test_mocks_podspec_file.insert(new_line_index, "s.dependency '" + @pod_name + "'" if new_line_index != -1                
+        if new_line_index != -1
+          test_mocks_podspec_file.insert(new_line_index, "s.dependency '" + @pod_name + "'" 
+        end
+        
         File.write(test_mocks_podspec_path, test_mocks_podspec_file)
     end
 
