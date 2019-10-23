@@ -15,12 +15,15 @@ TODO: Add long description of the pod here.
 
   s.static_framework = true
 
-  s.source_files = '${POD_NAME}/Sources/**/*'
+  s.source_files = '${POD_NAME}/Sources/**/*.swift'
   
   s.dependency 'PCCore'
 
   # s.resource_bundles = {
-  #   '${POD_NAME}' => ['${POD_NAME}/Assets/*.*']
+  #   '${POD_NAME}' => [
+  #     '${POD_NAME}/Assets/**/*.*',
+  #     '${POD_NAME}/Sources/**/*.{xib,storyboard}'
+  #   ]
   # }
   # s.frameworks = 'UIKit'
 
