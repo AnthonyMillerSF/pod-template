@@ -23,16 +23,7 @@ module Pod
       end
 
       snapshots = configurator.ask_with_answers("Would you like to include snapshot tests", ["Yes", "No"]).to_sym
-      case snapshots
-        when :yes
-          configurator.add_test_spec_dependency "iOSSnapshotTestCase", '~> 6.2'
-          configurator.add_test_spec_dependency "Nimble-Snapshots", '~> 8.1'
-
-          if keep_example == :no
-              puts " Putting example application back in, you cannot include snapshot tests without a host application."
-              keep_example = :yes
-          end
-      end
+      configurator.set_has_snapshot_tests(snapshots == :yes)
 
       configurator.set_keep_example(keep_example == :yes)
 

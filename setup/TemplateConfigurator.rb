@@ -13,6 +13,7 @@ module Pod
       @prefixes = []
       @message_bank = MessageBank.new(self)
       @keep_example = true
+      @has_snapshot_tests = false
     end
 
     #----------------------------------------#
@@ -85,6 +86,7 @@ module Pod
       add_dependencies_to_podspec_test_spec
       create_test_linter_symlink
       configure_example_app
+      configure_snapshot_tests
       add_lib_to_test_mocks
       delete_configuration_files      
 
@@ -99,6 +101,7 @@ module Pod
         FileUtils.mv "POD_LICENSE", "LICENSE"
         FileUtils.mv "NAME.podspec", podspec_path
         FileUtils.mv "Tests/POD_Tests.swift", test_file_path
+        FileUtils.mv "SnapshotTests/POD_SnapshotTests.swift", snapshot_test_file_path
     end
 
     def replace_test_file_with_template
@@ -137,6 +140,9 @@ module Pod
 
     def create_test_linter_symlink
         `cd Tests && ln -s ../../../kalaniTests/.swiftlint.yml .swiftlint.yml && cd ..`
+        if File.directory?("SnapshotTests")
+            `cd SnapshotTests && ln -s ../../../kalaniTests/.swiftlint.yml .swiftlint.yml && cd ..`
+        end
     end
 
     def configure_example_app
@@ -148,6 +154,26 @@ module Pod
             # Remove the actual folder + files for both projects
             `rm -rf Example`
         end
+    end
+
+    def configure_snapshot_tests
+        podspec_file = File.read podspec_path
+        podspec_file_content = (@has_snapshot_tests ? snapshot_tests_spec_contents : "")
+        podspec_file.gsub!("${SNAPSHOT_TEST_SPEC}", podspec_file_content)
+        File.open(podspec_path, "w") { |file| file.puts podspec_file }
+        if @has_snapshot_tests
+            replace_snapshot_test_file_with_template
+        else
+            # Remove the actual folder + files for both projects
+            `rm -rf SnapshotTests`
+        end
+    end
+
+    def replace_snapshot_test_file_with_template
+        content_path = "setup/test_examples/snapshot.swift"
+        tests = File.read test_file_path
+        tests.gsub!("${SNAPSHOT_TEST_EXAMPLE}", File.read(content_path) )
+        File.open(test_file_path, "w") { |file| file.puts tests }
     end
 
     def add_lib_to_test_mocks
@@ -194,6 +220,10 @@ module Pod
         @keep_example = keep_example
     end
 
+    def set_has_snapshot_tests(has_snapshot_tests)
+        @has_snapshot_tests = has_snapshot_tests
+    end
+
     def validate_user_details
         return (user_email.length > 0) && (user_name.length > 0)
     end
@@ -230,11 +260,31 @@ module Pod
         "Tests/#{pod_name}Tests.swift"
     end
 
+    def snapshot_test_file_path
+        "SnapshotTests/#{pod_name}SnapshotTests.swift"
+    end
+
     def example_app_spec_contents
 %q(
   s.app_spec 'ExampleApp' do |ts|
     ts.source_files = 'Example/**/*.swift'
   end
+)
+    end
+
+    def snapshot_tests_spec_contents
+%q(
+   s.test_spec 'SnapshotTests' do |ts|
+     ts.source_files = 'SnapshotTests/**/*.swift'
+
+     ts.requires_app_host = true
+
+     ts.dependency 'PCTestMocks'
+     ts.dependency 'Nimble'
+     ts.dependency 'Quick'
+     ts.dependency 'iOSSnapshotTestCase', '~> 6.2'
+     ts.dependency 'Nimble-Snapshots', '~> 8.1'
+   end
 )
     end
 
